@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "username", "age"})
+//@EqualsAndHashCode(of = {"id", "username", "age"})
 public class Member {
 
     @Id

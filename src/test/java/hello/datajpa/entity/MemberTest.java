@@ -42,12 +42,6 @@ class MemberTest {
         em.flush();
         em.clear();
 
-        //when
-//        Member foundMemberA = em.find(Member.class, memberA.getId());
-//        Member foundMemberB = em.find(Member.class, memberB);
-
-
-
         List<Member> foundMembers = em.createQuery(
                 "select m from Member m"
                 , Member.class).getResultList();
@@ -56,7 +50,7 @@ class MemberTest {
             System.out.println("member = " + member);
             System.out.println("member.getTeam() = " + member.getTeam());
         }
-        //then
-//        assertThat(foundMemberA).isEqualTo(memberA);
+        //그냥 실행할 경우 영속성컨테이너가 flush, clear된 상태이기때문에 같음을 보장안한다. equals 오버라이딩 하면 됨
+        //Assertions.assertThat(foundMembers).contains(memberA, memberB, memberC, memberD);
     }
 }
