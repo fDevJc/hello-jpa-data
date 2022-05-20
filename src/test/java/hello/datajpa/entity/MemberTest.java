@@ -1,7 +1,9 @@
 package hello.datajpa.entity;
 
+import hello.datajpa.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberTest {
     @PersistenceContext
     EntityManager em;
+
+    @Autowired
+    MemberRepository memberRepository;
+
 
     @Test
     void testEntity() {
@@ -52,5 +58,22 @@ class MemberTest {
         }
         //그냥 실행할 경우 영속성컨테이너가 flush, clear된 상태이기때문에 같음을 보장안한다. equals 오버라이딩 하면 됨
         //Assertions.assertThat(foundMembers).contains(memberA, memberB, memberC, memberD);
+    }
+
+    @Test
+    void jpaBaseEntity() throws InterruptedException {
+        //given
+        Member member = new Member("memberA");
+        memberRepository.save(member);
+
+        Thread.sleep(100);
+        member.setUsername("memberB");
+
+        em.flush();
+        em.clear();
+        //when
+        Member foundMember = memberRepository.findById(member.getId()).get();
+        System.out.println("foundMember = " + foundMember);
+        //then
     }
 }

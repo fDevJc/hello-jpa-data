@@ -3,19 +3,17 @@ package hello.datajpa.repository;
 import hello.datajpa.dto.MemberDto;
 import hello.datajpa.entity.Member;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
-import javax.persistence.Entity;
 import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;
 import java.util.Collection;
 import java.util.List;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long> , MemberCustomRepository{
     List<Member> findByUsernameAndAgeGreaterThan(String username, int age);
 
 //    @Query(name = "Member.findByUsername2")
